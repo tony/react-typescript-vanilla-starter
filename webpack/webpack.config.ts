@@ -7,42 +7,47 @@ const projectRoot = path.join(__dirname, "../");
 
 interface IWebpackEnv {
   devServerHost: string;
-  devServerPort: number;
+  devServerPort: string;
   production: boolean;
   watch: boolean;
 }
 
 const defaultEnvironment: IWebpackEnv = {
   devServerHost: "localhost",
-  devServerPort: 3099,
+  devServerPort: "3099",
   production: true,
   watch: false
 };
 
-const getConfig = (env = defaultEnvironment): webpack.Configuration => ({
+const getConfig = ({
+  devServerHost,
+  production,
+  watch,
+  devServerPort
+} = defaultEnvironment): webpack.Configuration => ({
   context: projectRoot,
-  ...(env.watch
+  ...(process.argv.some(arg => arg.includes("webpack-dev-server"))
     ? {
         devServer: {
           contentBase: "./dist",
           hot: true,
           open: true,
-          port: env.devServerPort,
+          port: parseInt(devServerPort, 10),
           publicPath: "/"
         }
       }
     : {}),
-  devtool: env.production ? "source-map" : "inline-source-map",
+  devtool: production ? "source-map" : "inline-source-map",
   entry: [
-    ...(env.watch
+    ...(watch
       ? [
-          `webpack-dev-server/client?http://${env.devServerHost}:${env.devServerPort}`,
+          `webpack-dev-server/client?http://${devServerHost}:${devServerPort}`,
           "webpack/hot/dev-server"
         ]
       : []),
     "./src/entry.tsx"
   ],
-  mode: env.production ? "production" : "development",
+  mode: production ? "production" : "development",
   module: {
     rules: [
       {
@@ -73,7 +78,7 @@ const getConfig = (env = defaultEnvironment): webpack.Configuration => ({
     path: path.resolve(projectRoot, "dist")
   },
   plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
-  watch: env.watch
+  watch
 });
 
 export default getConfig;
