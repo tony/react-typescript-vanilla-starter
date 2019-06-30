@@ -19,12 +19,7 @@ const defaultEnvironment: IWebpackEnv = {
   watch: false
 };
 
-const getConfig = ({
-  devServerHost,
-  production,
-  watch,
-  devServerPort
-} = defaultEnvironment): webpack.Configuration => ({
+const getConfig = (env: IWebpackEnv): webpack.Configuration => ({
   context: projectRoot,
   ...(process.argv.some(arg => arg.includes("webpack-dev-server"))
     ? {
@@ -32,22 +27,22 @@ const getConfig = ({
           contentBase: "./dist",
           hot: true,
           open: true,
-          port: parseInt(devServerPort, 10),
+          port: parseInt(env.devServerPort, 10),
           publicPath: "/"
         }
       }
     : {}),
-  devtool: production ? "source-map" : "inline-source-map",
+  devtool: env.production ? "source-map" : "inline-source-map",
   entry: [
-    ...(watch
+    ...(process.argv.some(arg => arg.includes("webpack-dev-server"))
       ? [
-          `webpack-dev-server/client?http://${devServerHost}:${devServerPort}`,
+          `webpack-dev-server/client?http://${env.devServerHost}:${env.devServerPort}`,
           "webpack/hot/dev-server"
         ]
       : []),
     "./src/entry.tsx"
   ],
-  mode: production ? "production" : "development",
+  mode: env.production ? "production" : "development",
   module: {
     rules: [
       {
@@ -78,7 +73,9 @@ const getConfig = ({
     path: path.resolve(projectRoot, "dist")
   },
   plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
-  watch
+  watch: env.watch
 });
 
-export default getConfig;
+export default (
+  env: IWebpackEnv // Merge default environment params
+) => getConfig({ ...defaultEnvironment, ...env });
