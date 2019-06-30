@@ -11,6 +11,28 @@ Dev server, typed webpack config, typescript, jsx, babel.
 No SASS/SCSS/LESS. No static files. Wiring those in are highly dependent on
 integration.
 
+Usage
+-----
+
+.. code-block:: bash
+   
+   npm install  # install packages
+
+   npm run start  # launch + hot reloading + watch file changes http://localhost:3099
+
+   npm run build  # build to dist/
+
+Environmental variables
+"""""""""""""""""""""""
+
+`Webpack's environmental variables`_ can be passed (``--env``):
+
+``npm run start -- --env.devServerPort 3082``
+
+``npm run start -- --env.production``
+
+.. _Webpack's environmental variables: https://webpack.js.org/guides/environment-variables/
+
 Contribution guidelines
 -----------------------
 Corrections: ✔️
