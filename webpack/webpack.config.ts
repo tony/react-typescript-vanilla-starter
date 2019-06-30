@@ -1,16 +1,16 @@
-import path from "path";
+import path from 'path';
 
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import webpack from "webpack";
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import webpack from 'webpack';
 
-const projectRoot = path.join(__dirname, "../");
+const projectRoot = path.join(__dirname, '../');
 
 const defaultEnvironment = {
-  devServerHost: "localhost",
+  devServerHost: 'localhost',
   devServerPort: 3000,
   development: false,
   production: true,
-  watch: false
+  watch: false,
 };
 
 const getConfig = (env = defaultEnvironment): webpack.Configuration => ({
@@ -18,56 +18,56 @@ const getConfig = (env = defaultEnvironment): webpack.Configuration => ({
   ...(env.watch
     ? {
         devServer: {
-          contentBase: "./dist",
+          contentBase: './dist',
           hot: true,
           open: true,
           port: env.devServerPort,
-          publicPath: "/"
-        }
+          publicPath: '/',
+        },
       }
     : {}),
-  devtool: env.production ? "source-map" : "inline-source-map",
+  devtool: env.production ? 'source-map' : 'inline-source-map',
   entry: [
     ...(env.watch
       ? [
           `webpack-dev-server/client?http://${env.devServerHost}:${env.devServerPort}`,
-          "webpack/hot/dev-server"
+          'webpack/hot/dev-server',
         ]
       : []),
-    "./src/entry.tsx"
+    './src/entry.tsx',
   ],
-  mode: env.production ? "production" : "development",
+  mode: env.production ? 'production' : 'development',
   module: {
     rules: [
       {
         exclude: /node_modules/,
         test: /\.tsx$/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
             babelrc: true,
-            configFile: "./.babelrc"
-          }
-        }
+            configFile: './.babelrc',
+          },
+        },
       },
       {
         exclude: /node_modules/,
         test: /\.ts$/,
         use: {
-          loader: "ts-loader",
+          loader: 'ts-loader',
           options: {
-            configFile: "./tsconfig.json"
-          }
-        }
-      }
-    ]
+            configFile: './tsconfig.json',
+          },
+        },
+      },
+    ],
   },
   output: {
-    filename: "cv.js",
-    path: path.resolve(projectRoot, "dist")
+    filename: 'cv.js',
+    path: path.resolve(projectRoot, 'dist'),
   },
-  plugins: [new HtmlWebpackPlugin({ template: "../lib/assets/index.html" })],
-  watch: env.watch
+  plugins: [new HtmlWebpackPlugin({template: './src/index.html'})],
+  watch: env.watch,
 });
 
 export default getConfig;
