@@ -2,7 +2,7 @@ See also: https://github.com/tony/vue-typescript-vanilla-starter
 
 Split off of https://github.com/tony/cv v2 in the initial stages
 
-MIT licensed. Feel free to copy and paste, fork, etc.
+MIT licensed. Feel free to copy, fork, etc.
 
 Summary
 -------
