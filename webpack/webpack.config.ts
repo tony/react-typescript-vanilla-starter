@@ -14,7 +14,7 @@ interface IWebpackEnv {
 
 const defaultEnvironment: IWebpackEnv = {
   devServerHost: "localhost",
-  devServerPort: "3099",
+  devServerPort: "3014",
   production: false,
   watch: false
 };
