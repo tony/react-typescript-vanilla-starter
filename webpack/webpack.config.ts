@@ -70,7 +70,7 @@ const getConfig = (env: IWebpackEnv): webpack.Configuration => ({
     ]
   },
   output: {
-    filename: "cv.js",
+    filename: "app.js",
     path: path.resolve(projectRoot, "dist")
   },
   plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
