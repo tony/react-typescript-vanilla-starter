@@ -24,7 +24,7 @@
     "react-hot-loader": "^4.12.20",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.2.1",
-    "ts-node": "^8.6.2",
+    "ts-node": "^8.7.0",
     "tslint": "^6.1.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.1.0",
