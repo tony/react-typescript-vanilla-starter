@@ -22,7 +22,7 @@
     "node-sass": "^4.13.1",
     "prettier": "^1.19.1",
     "react-hot-loader": "^4.12.20",
-    "source-map-loader": "^0.2.4",
+    "source-map-loader": "^1.0.1",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.2",
     "tslint": "^6.1.0",
