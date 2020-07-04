@@ -19,7 +19,7 @@
     "@types/webpack-dev-server": "^3.10.1",
     "babel-loader": "^8.0.6",
     "cross-env": "^7.0.2",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "prettier": "^1.19.1",
     "react-hot-loader": "^4.12.20",
     "source-map-loader": "^0.2.4",
