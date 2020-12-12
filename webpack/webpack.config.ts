@@ -8,6 +8,7 @@ const projectRoot = path.join(__dirname, "../");
 interface IWebpackEnv {
   devServerHost: string;
   devServerPort: string;
+  open: boolean;
   production: boolean;
   watch: boolean;
 }
@@ -15,33 +16,34 @@ interface IWebpackEnv {
 const defaultEnvironment: IWebpackEnv = {
   devServerHost: "localhost",
   devServerPort: "3014",
+  open: false,
   production: false,
-  watch: false
+  watch: false,
 };
 
 const getConfig = (env: IWebpackEnv): webpack.Configuration => ({
   context: projectRoot,
-  ...(process.argv.some(arg => arg.includes("webpack-dev-server"))
+  ...(process.argv.some((arg) => arg.includes("webpack-dev-server"))
     ? {
         devServer: {
           contentBase: "./dist",
           host: env.devServerHost,
           hot: true,
-          open: true,
+          open: env.open,
           port: parseInt(env.devServerPort, 10),
-          publicPath: "/"
-        }
+          publicPath: "/",
+        },
       }
     : {}),
   devtool: env.production ? "source-map" : "inline-source-map",
   entry: [
-    ...(process.argv.some(arg => arg.includes("webpack-dev-server"))
+    ...(process.argv.some((arg) => arg.includes("webpack-dev-server"))
       ? [
           `webpack-dev-server/client?http://${env.devServerHost}:${env.devServerPort}`,
-          "webpack/hot/dev-server"
+          "webpack/hot/dev-server",
         ]
       : []),
-    "./src/entry.tsx"
+    "./src/entry.tsx",
   ],
   mode: env.production ? "production" : "development",
   module: {
@@ -53,9 +55,9 @@ const getConfig = (env: IWebpackEnv): webpack.Configuration => ({
           loader: "babel-loader",
           options: {
             babelrc: true,
-            configFile: "./.babelrc"
-          }
-        }
+            configFile: "./.babelrc",
+          },
+        },
       },
       {
         exclude: /node_modules/,
@@ -63,18 +65,18 @@ const getConfig = (env: IWebpackEnv): webpack.Configuration => ({
         use: {
           loader: "ts-loader",
           options: {
-            configFile: "./tsconfig.json"
-          }
-        }
-      }
-    ]
+            configFile: "./tsconfig.json",
+          },
+        },
+      },
+    ],
   },
   output: {
     filename: "app.js",
-    path: path.resolve(projectRoot, "dist")
+    path: path.resolve(projectRoot, "dist"),
   },
   plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
-  watch: env.watch
+  watch: env.watch,
 });
 
 export default (
