@@ -20,6 +20,7 @@ Usage
 
    npm run start  # launch + hot reloading + watch file changes http://localhost:3099
 
+
    npm run build  # build to dist/
 
 Environmental variables
@@ -27,9 +28,11 @@ Environmental variables
 
 `Webpack's environmental variables`_ can be passed (``--env``):
 
-``npm run start -- --env.devServerPort 3082``
+``npm run start -- --env.devServerPort 3082``, build + watch at http://localhost:3082
 
 ``npm run start -- --env.production``
+
+``npm run start -- --open``  Launch browser + build + watch files, http://localhost:3099
 
 .. _Webpack's environmental variables: https://webpack.js.org/guides/environment-variables/
 
