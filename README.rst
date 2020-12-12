@@ -20,7 +20,6 @@ Usage
 
    npm run start  # launch + hot reloading + watch file changes http://localhost:3099
 
-
    npm run build  # build to dist/
 
 Environmental variables
