@@ -49,15 +49,19 @@ const getConfig = (env: IWebpackEnv): webpack.Configuration => ({
   module: {
     rules: [
       {
+        test: /\.[jt]sx?$/,
         exclude: /node_modules/,
-        test: /\.tsx$/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            babelrc: true,
-            configFile: "./.babelrc",
+        use: [
+          {
+            loader: require.resolve("babel-loader"),
+            options: {
+              plugins: [
+                !env.production && require.resolve("react-refresh/babel"),
+              ].filter(Boolean),
+              configFile: "./.babelrc",
+            },
           },
-        },
+        ],
       },
       {
         exclude: /node_modules/,
@@ -75,7 +79,19 @@ const getConfig = (env: IWebpackEnv): webpack.Configuration => ({
     filename: "app.js",
     path: path.resolve(projectRoot, "dist"),
   },
-  plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: path.join(__dirname, "./src/index.html"),
+    }),
+    // new HtmlWebpackPlugin({
+    //     filename: join(OUTPUT_DIR, './dist/index.html'),
+    //     hash: false,
+    //     inject: 'body',
+    //     minify: minifyOptions,
+    //     showErrors: false
+    //     template: join(__dirname, './src/index.html'),
+    // }),
+  ],
   watch: env.watch,
 });
 
