@@ -1,4 +1,5 @@
 {
+  "name": "react-typescript-vanilla-starter",
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "start": "cross-env TS_NODE_PROJECT=\"webpack/tsconfig.json\" webpack-dev-server --config webpack/webpack.config.ts",
